@@ -1,0 +1,2473 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huy Nguyễn - Web Developer & Content Creator | HuyBlog.id.vn</title>
+    <meta name="description" content="Website cá nhân của Huy Nguyễn - Full Stack Developer, Content Creator và Digital Marketing chuyên nghiệp tại Việt Nam">
+    <meta name="keywords" content="web developer, content creator, blog, technology, Vietnam, Huy Nguyen">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🚀</text></svg>">
+    
+    <style>
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --accent-secondary: #f5576c;
+            --text-dark: #2d3748;
+            --text-light: #718096;
+            --text-muted: #a0aec0;
+            --bg-light: #f7fafc;
+            --bg-card: #ffffff;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            --shadow-xl: 0 20px 40px rgba(0,0,0,0.15);
+            --gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-secondary) 100%);
+            --gradient-bg: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: var(--gradient-primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after, .nav-link.active::after {
+            width: 100%;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .mobile-menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+            margin: 2px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            animation: float 30s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 3.8rem;
+            color: white;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            font-weight: 800;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .hero-content .subtitle {
+            font-size: 1.4rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            animation: slideInLeft 1s ease-out 0.2s both;
+        }
+
+        .hero-content .description {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+            animation: slideInLeft 1s ease-out 0.4s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            animation: slideInLeft 1s ease-out 0.6s both;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-primary:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--primary-color);
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-light);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .hero-image {
+            display: flex;
+            justify-content: center;
+            animation: slideInRight 1s ease-out 0.3s both;
+        }
+
+        .profile-container {
+            position: relative;
+        }
+
+        .profile-image {
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 10px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            animation: profileFloat 6s ease-in-out infinite;
+            background: var(--gradient-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 5rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        @keyframes profileFloat {
+            0%, 100% { transform: translateY(0px) scale(1); }
+            50% { transform: translateY(-10px) scale(1.02); }
+        }
+
+        .image-link-input {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 70px;
+            height: 70px;
+            background: var(--gradient-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+            font-size: 1.8rem;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+
+        .image-link-input:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Modal for image input */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 10% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            position: relative;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-dark);
+        }
+
+        .modal h3 {
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .image-url-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .image-url-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+
+        /* About Section */
+        .about {
+            padding: 120px 0;
+            background: var(--bg-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+            font-weight: 700;
+            position: relative;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-primary);
+            margin: 1.5rem auto;
+            border-radius: 2px;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .about-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem 1.5rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .stat-number {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .about-content {
+            background: white;
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+        }
+
+        .skills-section {
+            margin-top: 2.5rem;
+        }
+
+        .skills-section h3 {
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-category h4 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .skill-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .skill-tag {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Experience Section */
+        .experience {
+            padding: 120px 0;
+            background: white;
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background: var(--gradient-primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -12px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            top: 20px;
+            border: 4px solid white;
+            box-shadow: var(--shadow-md);
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -13px;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .timeline-date {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-title {
+            color: var(--text-dark);
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-company {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-description {
+            color: var(--text-light);
+            line-height: 1.7;
+        }
+
+        .timeline-skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .timeline-skill {
+            background: var(--bg-light);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        /* Projects Section */
+        .projects {
+            padding: 120px 0;
+            background: var(--bg-light);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .project-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 220px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+
+        .project-content {
+            padding: 2.5rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .project-description {
+            color: var(--text-light);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .project-tag {
+            background: var(--bg-light);
+            color: var(--primary-color);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid var(--border-color);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-link.primary {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        .project-link.primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .project-link.secondary {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+        }
+
+        .project-link.secondary:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Blog Section */
+        .blog {
+            padding: 120px 0;
+            background: white;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: var(--gradient-accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .blog-content {
+            padding: 2rem;
+        }
+
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .blog-category {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .blog-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .blog-excerpt {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .blog-link:hover {
+            gap: 1rem;
+            color: var(--secondary-color);
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 120px 0;
+            background: var(--bg-light);
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .contact-info {
+            background: white;
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-intro {
+            margin-bottom: 2.5rem;
+        }
+
+        .contact-intro h3 {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .contact-intro p {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            transform: translateX(5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            box-shadow: var(--shadow-md);
+            flex-shrink: 0;
+        }
+
+        .contact-details h4 {
+            color: var(--text-dark);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-details p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        .contact-form {
+            background: white;
+            padding: 3rem;
+            border-radius: 25px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+        }
+
+        .contact-form h3 {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: var(--bg-card);
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Social Links */
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            justify-content: center;
+        }
+
+        .social-link {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px) scale(1.1);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .footer-section p, .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            line-height: 1.8;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .footer-social-link {
+            width: 45px;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .footer-social-link:hover {
+            background: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        /* Animations */
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+            z-index: 1000;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-container {
+                gap: 3rem;
+            }
+            
+            .profile-image {
+                width: 320px;
+                height: 320px;
+                font-size: 4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                display: none;
+                position: fixed;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: white;
+                flex-direction: column;
+                text-align: center;
+                padding: 2rem;
+                box-shadow: var(--shadow-lg);
+                border-top: 1px solid var(--border-color);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                gap: 2rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.8rem;
+            }
+
+            .profile-image {
+                width: 280px;
+                height: 280px;
+                font-size: 3.5rem;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .about-stats {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+
+            .timeline::after {
+                left: 31px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .timeline-item::after {
+                left: 19px;
+            }
+
+            .timeline-item:nth-child(even) {
+                left: 0%;
+            }
+
+            .timeline-item:nth-child(even)::after {
+                left: 19px;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .footer-bottom {
+                text-align: center;
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .hero-content h1 {
+                font-size: 2.2rem;
+            }
+
+            .profile-image {
+                width: 220px;
+                height: 220px;
+                font-size: 2.8rem;
+            }
+
+            .about-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .btn {
+                padding: 12px 24px;
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .timeline-content {
+                padding: 1.5rem;
+            }
+
+            .project-content {
+                padding: 1.5rem;
+            }
+
+            .contact-info, .contact-form {
+                padding: 2rem;
+            }
+        }
+
+        /* Loading animation */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient-primary);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo">HuyBlog.id.vn</a>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link active">Trang chủ</a></li>
+                <li><a href="#about" class="nav-link">Giới thiệu</a></li>
+                <li><a href="#experience" class="nav-link">Kinh nghiệm</a></li>
+                <li><a href="#projects" class="nav-link">Dự án</a></li>
+                <li><a href="#blog" class="nav-link">Blog</a></li>
+                <li><a href="#contact" class="nav-link">Liên hệ</a></li>
+            </ul>
+            <div class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1>Xin chào, tôi là <span style="background: linear-gradient(45deg, #f093fb, #f5576c); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Huy</span></h1>
+                <p class="subtitle">Full-Stack Developer & Content Creator</p>
+                <p class="description">
+                    Tôi chuyên phát triển ứng dụng web hiện đại, tạo nội dung hấp dẫn và 
+                    chia sẻ kiến thức công nghệ với cộng đồng. Với hơn 5 năm kinh nghiệm 
+                    trong lĩnh vực IT, tôi luôn đam mê học hỏi và áp dụng những công nghệ mới nhất.
+                </p>
+                <div class="hero-buttons">
+                    <a href="#projects" class="btn btn-primary">
+                        🚀 Xem dự án
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        💬 Liên hệ ngay
+                    </a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="profile-container">
+                    <div class="profile-image" id="profileImage">
+                        H
+                    </div>
+                    <div class="image-link-input" onclick="openImageModal()">
+                        📷
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image URL Modal -->
+    <div id="imageModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeImageModal()">&times;</span>
+            <h3>🖼️ Thêm ảnh đại diện</h3>
+            <p style="margin-bottom: 1rem; color: var(--text-light);">Nhập link ảnh của bạn để hiển thị làm ảnh đại diện:</p>
+            <input type="url" id="imageUrlInput" class="image-url-input" 
+                   placeholder="me_va_toi.jpg">
+            <div style="display: flex; gap: 1rem;">
+                <button onclick="setProfileImage()" class="btn btn-primary" style="flex: 1;">
+                    Áp dụng
+                </button>
+                <button onclick="closeImageModal()" class="btn btn-secondary" style="flex: 1;">
+                    Hủy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Về tôi</h2>
+                <p class="section-subtitle">Đam mê công nghệ, sáng tạo và chia sẻ kiến thức</p>
+            </div>
+            
+            <div class="about-grid">
+                <div class="about-stats">
+                    <div class="stat-item fade-in-up">
+                        <div class="stat-number">5+</div>
+                        <div class="stat-label">Năm kinh nghiệm</div>
+                    </div>
+                    <div class="stat-item fade-in-up">
+                        <div class="stat-number">50+</div>
+                        <div class="stat-label">Dự án hoàn thành</div>
+                    </div>
+                    <div class="stat-item fade-in-up">
+                        <div class="stat-number">100+</div>
+                        <div class="stat-label">Bài viết blog</div>
+                    </div>
+                    <div class="stat-item fade-in-up">
+                        <div class="stat-number">1K+</div>
+                        <div class="stat-label">Người theo dõi</div>
+                    </div>
+                </div>
+
+                <div class="about-content fade-in-up">
+                    <div class="about-text">
+                        <p>
+                            <strong>Xin chào!</strong> Tôi là Huy Nguyễn, một Full-Stack Developer đam mê với hơn 5 năm kinh nghiệm trong việc phát triển các ứng dụng web và mobile. 
+                            Tôi chuyên về JavaScript, React, Node.js, và các công nghệ cloud hiện đại.
+                        </p>
+                        <p>
+                            Ngoài lập trình, tôi còn là một Content Creator tích cực, thường xuyên chia sẻ kiến thức thông qua blog cá nhân và các kênh mạng xã hội. 
+                            Tôi tin rằng việc chia sẻ kiến thức không chỉ giúp cộng đồng phát triển mà còn giúp bản thân hoàn thiện hơn.
+                        </p>
+                        <p>
+                            Hiện tại, tôi đang tập trung vào việc phát triển các sản phẩm công nghệ sáng tạo và xây dựng cộng đồng developer Việt Nam thông qua các hoạt động chia sẻ và hướng dẫn.
+                        </p>
+                    </div>
+
+                    <div class="skills-section">
+                        <h3>🛠️ Kỹ năng chuyên môn</h3>
+                        <div class="skills-grid">
+                            <div class="skill-category">
+                                <h4>Frontend</h4>
+                                <div class="skill-list">
+                                    <span class="skill-tag">React</span>
+                                    <span class="skill-tag">Vue.js</span>
+                                    <span class="skill-tag">TypeScript</span>
+                                    <span class="skill-tag">Next.js</span>
+                                    <span class="skill-tag">Tailwind CSS</span>
+                                </div>
+                            </div>
+                            <div class="skill-category">
+                                <h4>Backend</h4>
+                                <div class="skill-list">
+                                    <span class="skill-tag">Node.js</span>
+                                    <span class="skill-tag">Python</span>
+                                    <span class="skill-tag">Express.js</span>
+                                    <span class="skill-tag">MongoDB</span>
+                                    <span class="skill-tag">PostgreSQL</span>
+                                </div>
+                            </div>
+                            <div class="skill-category">
+                                <h4>DevOps & Tools</h4>
+                                <div class="skill-list">
+                                    <span class="skill-tag">Docker</span>
+                                    <span class="skill-tag">AWS</span>
+                                    <span class="skill-tag">Git</span>
+                                    <span class="skill-tag">CI/CD</span>
+                                    <span class="skill-tag">Linux</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section class="experience" id="experience">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Kinh nghiệm làm việc</h2>
+                <p class="section-subtitle">Hành trình phát triển sự nghiệp của tôi</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2022 - Hiện tại</div>
+                        <h3 class="timeline-title">Senior Full-Stack Developer</h3>
+                        <p class="timeline-company">TechStart Vietnam</p>
+                        <p class="timeline-description">
+                            Dẫn dắt đội ngũ phát triển các ứng dụng web và mobile quy mô lớn. Chịu tr책nhiệm thiết kế architecture, 
+                            code review và mentor các developer junior. Tham gia trực tiếp vào việc phát triển hệ thống e-commerce 
+                            phục vụ hơn 100,000 người dùng.
+                        </p>
+                        <div class="timeline-skills">
+                            <span class="timeline-skill">React</span>
+                            <span class="timeline-skill">Node.js</span>
+                            <span class="timeline-skill">AWS</span>
+                            <span class="timeline-skill">Team Leadership</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2020 - 2022</div>
+                        <h3 class="timeline-title">Full-Stack Developer</h3>
+                        <p class="timeline-company">Digital Solutions Co.</p>
+                        <p class="timeline-description">
+                            Phát triển và duy trì nhiều dự án web application cho các khách hàng doanh nghiệp. 
+                            Tham gia xây dựng hệ thống CRM và ERP, tối ưu hóa performance và user experience. 
+                            Làm việc với các công nghệ hiện đại và agile methodology.
+                        </p>
+                        <div class="timeline-skills">
+                            <span class="timeline-skill">Vue.js</span>
+                            <span class="timeline-skill">Python</span>
+                            <span class="timeline-skill">Docker</span>
+                            <span class="timeline-skill">Agile</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2019 - 2020</div>
+                        <h3 class="timeline-title">Frontend Developer</h3>
+                        <p class="timeline-company">WebCraft Agency</p>
+                        <p class="timeline-description">
+                            Bắt đầu sự nghiệp với vai trò Frontend Developer, tập trung vào việc xây dựng giao diện người dùng 
+                            đẹp mắt và responsive. Học hỏi và áp dụng các best practices trong front-end development, 
+                            làm việc chặt chẽ với team design và UX.
+                        </p>
+                        <div class="timeline-skills">
+                            <span class="timeline-skill">JavaScript</span>
+                            <span class="timeline-skill">HTML/CSS</span>
+                            <span class="timeline-skill">jQuery</span>
+                            <span class="timeline-skill">Responsive Design</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item fade-in-up">
+                    <div class="timeline-content">
+                        <div class="timeline-date">2017 - 2019</div>
+                        <h3 class="timeline-title">Học vấn</h3>
+                        <p class="timeline-company">Đại học Công nghệ Thông tin</p>
+                        <p class="timeline-description">
+                            Tốt nghiệp bằng Cử nhân Công nghệ Thông tin với điểm GPA 3.7/4.0. 
+                            Tham gia nhiều dự án nghiên cứu về AI và Machine Learning. 
+                            Là thành viên tích cực của câu lạc bộ lập trình và team leader của nhiều dự án nhóm.
+                        </p>
+                        <div class="timeline-skills">
+                            <span class="timeline-skill">Computer Science</span>
+                            <span class="timeline-skill">Algorithms</span>
+                            <span class="timeline-skill">Machine Learning</span>
+                            <span class="timeline-skill">Project Management</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="projects" id="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Dự án nổi bật</h2>
+                <p class="section-subtitle">Một số dự án tiêu biểu mà tôi đã thực hiện</p>
+            </div>
+
+            <div class="projects-grid">
+                <div class="project-card fade-in-up">
+                    <div class="project-image">
+                        🛒
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-primary">Demo</a>
+                            <a href="#" class="btn btn-secondary">GitHub</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">E-Commerce Platform</h3>
+                        <p class="project-description">
+                            Nền tảng thương mại điện tử đầy đủ tính năng với React, Node.js và MongoDB. 
+                            Hỗ trợ thanh toán online, quản lý kho hàng và dashboard admin hoàn chỉnh.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">Node.js</span>
+                            <span class="project-tag">MongoDB</span>
+                            <span class="project-tag">Stripe API</span>
+                            <span class="project-tag">JWT</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link primary">
+                                🌐 Live Demo
+                            </a>
+                            <a href="#" class="project-link secondary">
+                                📂 Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in-up">
+                    <div class="project-image">
+                        📱
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-primary">Demo</a>
+                            <a href="#" class="btn btn-secondary">GitHub</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Social Media Dashboard</h3>
+                        <p class="project-description">
+                            Ứng dụng quản lý và phân tích social media với real-time analytics, 
+                            tích hợp API của Facebook, Instagram và Twitter. Giao diện responsive và user-friendly.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Vue.js</span>
+                            <span class="project-tag">Express.js</span>
+                            <span class="project-tag">Chart.js</span>
+                            <span class="project-tag">Social APIs</span>
+                            <span class="project-tag">Real-time</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link primary">
+                                🚀 Xem Demo
+                            </a>
+                            <a href="#" class="project-link secondary">
+                                💻 GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in-up">
+                    <div class="project-image">
+                        🎯
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-primary">Demo</a>
+                            <a href="#" class="btn btn-secondary">GitHub</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Task Management App</h3>
+                        <p class="project-description">
+                            Ứng dụng quản lý công việc nhóm với tính năng real-time collaboration, 
+                            drag & drop interface, timeline tracking và báo cáo tiến độ chi tiết.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">Socket.io</span>
+                            <span class="project-tag">PostgreSQL</span>
+                            <span class="project-tag">Docker</span>
+                            <span class="project-tag">AWS</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link primary">
+                                ✨ Live Demo
+                            </a>
+                            <a href="#" class="project-link secondary">
+                                🔍 Chi tiết
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in-up">
+                    <div class="project-image">
+                        🤖
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-primary">Demo</a>
+                            <a href="#" class="btn btn-secondary">GitHub</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">AI Chatbot Platform</h3>
+                        <p class="project-description">
+                            Nền tảng tạo và triển khai chatbot AI cho doanh nghiệp. 
+                            Tích hợp NLP, machine learning và khả năng tùy chỉnh theo ngành nghề.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">TensorFlow</span>
+                            <span class="project-tag">FastAPI</span>
+                            <span class="project-tag">NLP</span>
+                            <span class="project-tag">Docker</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link primary">
+                                🎯 Demo
+                            </a>
+                            <a href="#" class="project-link secondary">
+                                📖 Documentation
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in-up">
+                    <div class="project-image">
+                        📊
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-primary">Demo</a>
+                            <a href="#" class="btn btn-secondary">GitHub</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Data Visualization Tool</h3>
+                        <p class="project-description">
+                            Công cụ trực quan hóa dữ liệu mạnh mẽ với khả năng import/export nhiều định dạng, 
+                            tạo biểu đồ interactive và dashboard tùy chỉnh.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">D3.js</span>
+                            <span class="project-tag">React</span>
+                            <span class="project-tag">Python</span>
+                            <span class="project-tag">Pandas</span>
+                            <span class="project-tag">API</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link primary">
+                                📈 Demo
+                            </a>
+                            <a href="#" class="project-link secondary">
+                                🛠️ GitHub
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card fade-in-up">
+                    <div class="project-image">
+                        🌐
+                        <div class="project-overlay">
+                            <a href="#" class="btn btn-primary">Demo</a>
+                            <a href="#" class="btn btn-secondary">GitHub</a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <h3 class="project-title">Portfolio Website Builder</h3>
+                        <p class="project-description">
+                            Công cụ tạo website portfolio drag-and-drop cho developers và designers. 
+                            Hỗ trợ themes đa dạng, responsive design và tối ưu SEO.
+                        </p>
+                        <div class="project-tags">
+                            <span class="project-tag">Next.js</span>
+                            <span class="project-tag">Tailwind</span>
+                            <span class="project-tag">Drag & Drop</span>
+                            <span class="project-tag">SEO</span>
+                            <span class="project-tag">CMS</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="#" class="project-link primary">
+                                🎨 Demo
+                            </a>
+                            <a href="#" class="project-link secondary">
+                                📋 Case Study
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="#contact" class="btn btn-primary" style="padding: 16px 32px; font-size: 1.1rem;">
+                    🚀 Bắt đầu dự án mới
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog" id="blog">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Blog & Bài viết</h2>
+                <p class="section-subtitle">Chia sẻ kiến thức và kinh nghiệm trong lĩnh vực công nghệ</p>
+            </div>
+
+            <div class="blog-grid">
+                <article class="blog-card fade-in-up">
+                    <div class="blog-image">
+                        ⚛️
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">15 Tháng 12, 2024</span>
+                            <span class="blog-category">React</span>
+                        </div>
+                        <h3 class="blog-title">React 18: Những tính năng mới và cách migrate</h3>
+                        <p class="blog-excerpt">
+                            Tìm hiểu về Concurrent Features, Suspense improvements và các breaking changes 
+                            trong React 18. Hướng dẫn chi tiết cách upgrade từ phiên bản cũ...
+                        </p>
+                        <a href="#" class="blog-link">
+                            Đọc tiếp →
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card fade-in-up">
+                    <div class="blog-image">
+                        🚀
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">10 Tháng 12, 2024</span>
+                            <span class="blog-category">DevOps</span>
+                        </div>
+                        <h3 class="blog-title">CI/CD với GitHub Actions và Docker</h3>
+                        <p class="blog-excerpt">
+                            Xây dựng pipeline CI/CD hoàn chỉnh cho ứng dụng Node.js sử dụng GitHub Actions. 
+                            Từ build, test đến deploy tự động lên production...
+                        </p>
+                        <a href="#" class="blog-link">
+                            Xem chi tiết →
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card fade-in-up">
+                    <div class="blog-image">
+                        🎯
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">5 Tháng 12, 2024</span>
+                            <span class="blog-category">JavaScript</span>
+                        </div>
+                        <h3 class="blog-title">Performance Optimization cho Web Apps</h3>
+                        <p class="blog-excerpt">
+                            Các kỹ thuật tối ưu hóa hiệu suất web application: lazy loading, code splitting, 
+                            caching strategies và monitoring tools...
+                        </p>
+                        <a href="#" class="blog-link">
+                            Tìm hiểu →
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card fade-in-up">
+                    <div class="blog-image">
+                        🤖
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">28 Tháng 11, 2024</span>
+                            <span class="blog-category">AI</span>
+                        </div>
+                        <h3 class="blog-title">Tích hợp AI vào ứng dụng web với OpenAI API</h3>
+                        <p class="blog-excerpt">
+                            Hướng dẫn tích hợp ChatGPT API vào ứng dụng React. Xây dựng chatbot thông minh 
+                            với context awareness và rate limiting...
+                        </p>
+                        <a href="#" class="blog-link">
+                            Đọc ngay →
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card fade-in-up">
+                    <div class="blog-image">
+                        🔒
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">20 Tháng 11, 2024</span>
+                            <span class="blog-category">Security</span>
+                        </div>
+                        <h3 class="blog-title">Web Security: JWT vs Session-based Authentication</h3>
+                        <p class="blog-excerpt">
+                            So sánh chi tiết giữa JWT và Session-based authentication. Ưu nhược điểm, 
+                            use cases và best practices cho từng phương pháp...
+                        </p>
+                        <a href="#" class="blog-link">
+                            Khám phá →
+                        </a>
+                    </div>
+                </article>
+
+                <article class="blog-card fade-in-up">
+                    <div class="blog-image">
+                        📊
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span class="blog-date">15 Tháng 11, 2024</span>
+                            <span class="blog-category">Career</span>
+                        </div>
+                        <h3 class="blog-title">Roadmap trở thành Full-Stack Developer 2024</h3>
+                        <p class="blog-excerpt">
+                            Lộ trình học tập chi tiết từ cơ bản đến nâng cao. Các skills cần thiết, 
+                            resources học tập và tips để landing first job...
+                        </p>
+                        <a href="#" class="blog-link">
+                            Xem roadmap →
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="#" class="btn btn-primary" style="padding: 16px 32px; font-size: 1.1rem;">
+                    📝 Xem tất cả bài viết
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Liên hệ với tôi</h2>
+                <p class="section-subtitle">Hãy kết nối và thảo luận về dự án của bạn</p>
+            </div>
+
+            <div class="contact-container">
+                <div class="contact-info fade-in-up">
+                    <div class="contact-intro">
+                        <h3>💬 Hãy trò chuyện!</h3>
+                        <p>
+                            Tôi luôn sẵn sàng kết nối với những người có cùng đam mê công nghệ. 
+                            Dù bạn muốn thảo luận về dự án, hợp tác hay chỉ đơn giản là trò chuyện 
+                            về tech, đừng ngần ngại liên hệ!
+                        </p>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">📧</div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>hello@huyblog.id.vn</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">📱</div>
+                        <div class="contact-details">
+                            <h4>Điện thoại</h4>
+                            <p>+84 123 456 789</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">📍</div>
+                        <div class="contact-details">
+                            <h4>Địa chỉ</h4>
+                            <p>Hồ Chí Minh, Việt Nam</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <div class="contact-icon">🕐</div>
+                        <div class="contact-details">
+                            <h4>Giờ làm việc</h4>
+                            <p>Thứ 2 - Thứ 6: 9:00 - 18:00</p>
+                        </div>
+                    </div>
+
+                    <div class="social-links">
+                        <a href="#" class="social-link" title="GitHub">
+                            💻
+                        </a>
+                        <a href="#" class="social-link" title="LinkedIn">
+                            💼
+                        </a>
+                        <a href="#" class="social-link" title="Twitter">
+                            🐦
+                        </a>
+                        <a href="#" class="social-link" title="Facebook">
+                            📘
+                        </a>
+                        <a href="#" class="social-link" title="Instagram">
+                            📸
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-form fade-in-up">
+                    <h3>📝 Gửi tin nhắn</h3>
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Họ tên *</label>
+                            <input type="text" id="name" name="name" class="form-input" required 
+                                   placeholder="Nguyễn Văn A">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email *</label>
+                            <input type="email" id="email" name="email" class="form-input" required 
+                                   placeholder="example@email.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="subject" class="form-label">Chủ đề</label>
+                            <input type="text" id="subject" name="subject" class="form-input" 
+                                   placeholder="Hợp tác dự án web development">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message" class="form-label">Tin nhắn *</label>
+                            <textarea id="message" name="message" class="form-textarea" required 
+                                      placeholder="Xin chào Huy, tôi muốn thảo luận về..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            <span class="submit-text">🚀 Gửi tin nhắn</span>
+                            <span class="submit-loading" style="display: none;">
+                                <span class="loading-spinner"></span> Đang gửi...
+                            </span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🚀 HuyBlog.id.vn</h3>
+                    <p>
+                        Chia sẻ kiến thức, kinh nghiệm và đam mê công nghệ. 
+                        Kết nối cộng đồng developers Việt Nam through innovative solutions.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="footer-social-link" title="GitHub">💻</a>
+                        <a href="#" class="footer-social-link" title="LinkedIn">💼</a>
+                        <a href="#" class="footer-social-link" title="Twitter">🐦</a>
+                        <a href="#" class="footer-social-link" title="YouTube">📺</a>
+                        <a href="#" class="footer-social-link" title="Instagram">📸</a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>🔗 Liên kết nhanh</h3>
+                    <ul class="footer-links">
+                        <li><a href="#about">Giới thiệu</a></li>
+                        <li><a href="#experience">Kinh nghiệm</a></li>
+                        <li><a href="#projects">Dự án</a></li>
+                        <li><a href="#blog">Blog</a></li>
+                        <li><a href="#contact">Liên hệ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>📝 Dịch vụ</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Web Development</a></li>
+                        <li><a href="#">Mobile App Development</a></li>
+                        <li><a href="#">UI/UX Design</a></li>
+                        <li><a href="#">Consulting</a></li>
+                        <li><a href="#">Technical Writing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>📧 Newsletter</h3>
+                    <p>Đăng ký để nhận những bài viết mới nhất về công nghệ</p>
+                    <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+                        <input type="email" placeholder="your@email.com" 
+                               style="flex: 1; padding: 10px; border: none; border-radius: 8px; font-size: 0.9rem;">
+                        <button style="padding: 10px 16px; background: var(--gradient-primary); 
+                                      color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;">
+                            Đăng ký
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 HuyBlog.id.vn. All rights reserved.</p>
+                <p>Made with ❤️ in Vietnam</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" onclick="scrollToTop()">
+        ↑
+    </button>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        mobileMenuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            
+            // Animate hamburger menu
+            const spans = mobileMenuToggle.querySelectorAll('span');
+            if (navMenu.classList.contains('active')) {
+                spans[0].style.transform = 'rotate(-45deg) translate(-5px, 6px)';
+                spans[1].style.opacity = '0';
+                spans[2].style.transform = 'rotate(45deg) translate(-5px, -6px)';
+            } else {
+                spans[0].style.transform = 'rotate(0) translate(0, 0)';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'rotate(0) translate(0, 0)';
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                const spans = mobileMenuToggle.querySelectorAll('span');
+                spans[0].style.transform = 'rotate(0) translate(0, 0)';
+                spans[1].style.opacity = '1';
+                spans[2].style.transform = 'rotate(0) translate(0, 0)';
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Active nav link on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Image modal functions
+        function openImageModal() {
+            document.getElementById('imageModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        function setProfileImage() {
+            const imageUrl = document.getElementById('imageUrlInput').value.trim();
+            const profileImage = document.getElementById('profileImage');
+            
+            if (!imageUrl) {
+                alert('Vui lòng nhập URL hình ảnh!');
+                return;
+            }
+
+            // Validate URL
+            if (!isValidImageUrl(imageUrl)) {
+                alert('URL không hợp lệ! Vui lòng nhập URL hình ảnh hợp lệ.');
+                return;
+            }
+
+            // Create and test image
+            const img = new Image();
+            img.onload = function() {
+                profileImage.innerHTML = `<img src="${imageUrl}" alt="Profile Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">`;
+                closeImageModal();
+                document.getElementById('imageUrlInput').value = '';
+            };
+            
+            img.onerror = function() {
+                alert('Không thể tải hình ảnh từ URL này. Vui lòng kiểm tra lại!');
+            };
+            
+            img.src = imageUrl;
+        }
+
+        function isValidImageUrl(url) {
+            try {
+                const urlObj = new URL(url);
+                return urlObj.protocol === 'http:' || urlObj.protocol === 'https:';
+            } catch {
+                return false;
+            }
+        }
+
+        // Close modal when clicking outside
+        window.addEventListener('click', (e) => {
+            const modal = document.getElementById('imageModal');
+            if (e.target === modal) {
+                closeImageModal();
+            }
+        });
+
+        // Escape key to close modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeImageModal();
+            }
+        });
+
+        // Enter key to set image
+        document.getElementById('imageUrlInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                setProfileImage();
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in-up elements
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopButton.classList.add('visible');
+            } else {
+                backToTopButton.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = e.target.querySelector('.btn-submit');
+            const submitText = submitBtn.querySelector('.submit-text');
+            const submitLoading = submitBtn.querySelector('.submit-loading');
+            
+            // Show loading state
+            submitText.style.display = 'none';
+            submitLoading.style.display = 'inline-flex';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission (replace with actual API call)
+            try {
+                await new Promise(resolve => setTimeout(resolve, 2000));
+                
+                // Success
+                alert('✅ Tin nhắn đã được gửi thành công! Tôi sẽ phản hồi bạn sớm nhất có thể.');
+                e.target.reset();
+            } catch (error) {
+                // Error
+                alert('❌ Có lỗi xảy ra khi gửi tin nhắn. Vui lòng thử lại sau!');
+            } finally {
+                // Reset button state
+                submitText.style.display = 'inline';
+                submitLoading.style.display = 'none';
+                submitBtn.disabled = false;
+            }
+        });
+
+        // Newsletter subscription
+        document.querySelector('button').addEventListener('click', function(e) {
+            if (this.textContent.trim() === 'Đăng ký') {
+                e.preventDefault();
+                const emailInput = this.previousElementSibling;
+                const email = emailInput.value.trim();
+                
+                if (!email) {
+                    alert('Vui lòng nhập email!');
+                    return;
+                }
+                
+                if (!isValidEmail(email)) {
+                    alert('Email không hợp lệ!');
+                    return;
+                }
+                
+                // Simulate subscription
+                this.textContent = 'Đang xử lý...';
+                setTimeout(() => {
+                    alert('✅ Cảm ơn bạn đã đăng ký newsletter!');
+                    emailInput.value = '';
+                    this.textContent = 'Đăng ký';
+                }, 1000);
+            }
+        });
+
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.offsetTop;
+                    const offsetPosition = elementPosition - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add loading animation to external links
+        document.querySelectorAll('a[href^="http"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.textContent.includes('Demo') || this.textContent.includes('GitHub')) {
+                    // For demo purposes, prevent actual navigation
+                    e.preventDefault();
+                    alert('🚧 Đây là demo website. Link thực tế sẽ được cập nhật sau!');
+                }
+            });
+        });
+
+        // Typing effect for hero title
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            type();
+        }
+
+        // Initialize typing effect after page load
+        window.addEventListener('load', () => {
+            // Add some interactive effects
+            console.log('🚀 Welcome to HuyBlog.id.vn!');
+            console.log('💻 Interested in the code? Check out the source!');
+        });
+
+        // Add particle effect to hero section (simple version)
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.style.position = 'absolute';
+            particle.style.width = '4px';
+            particle.style.height = '4px';
+            particle.style.background = 'rgba(255,255,255,0.3)';
+            particle.style.borderRadius = '50%';
+            particle.style.pointerEvents = 'none';
+            particle.style.left = Math.random() * window.innerWidth + 'px';
+            particle.style.top = '-10px';
+            particle.style.zIndex = '0';
+            
+            document.querySelector('.hero').appendChild(particle);
+            
+            const animation = particle.animate([
+                { transform: 'translateY(0px)', opacity: 1 },
+                { transform: `translateY(${window.innerHeight + 100}px)`, opacity: 0 }
+            ], {
+                duration: Math.random() * 3000 + 2000,
+                easing: 'linear'
+            });
+            
+            animation.onfinish = () => particle.remove();
+        }
+
+        // Create particles occasionally
+        setInterval(createParticle, 3000);
+    </script>
+</body>
+</html>
